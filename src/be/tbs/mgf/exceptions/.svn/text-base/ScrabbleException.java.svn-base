@@ -1,0 +1,27 @@
+package be.tbs.mgf.exceptions;
+
+public class ScrabbleException extends Exception {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = -961027433441054080L;
+
+	/**
+	 * Construct a new Scrabble Exception with given message and cause
+	 * @param message - the reason for throwing this error
+	 * @param cause - the cause for this error
+	 */
+	public ScrabbleException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	/**
+	 * Construct a new Scrabble Exception with given message
+	 * @param message - the reason for throwing this error
+	 */
+	public ScrabbleException(String message) {
+		super(message);
+	}
+	
+}

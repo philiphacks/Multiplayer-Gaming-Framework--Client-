@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.tbs.be/mgf/schemas" 
+		xmlns:tns="http://www.tbs.be/mgf/schemas" 
+		elementFormDefault="qualified">
+
+	<xsd:complexType name="Message">
+		<xsd:sequence>
+			<xsd:element name="Version" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Ping">
+		<xsd:sequence>
+			<xsd:element name="TimeStamp" type="xsd:dateTime" minOccurs="1" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Pong">
+		<xsd:sequence>
+			<xsd:element name="RequestStamp" type="xsd:dateTime" minOccurs="1" nillable="false"/>
+			<xsd:element name="TimeStamp" type="xsd:dateTime" minOccurs="1" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Request">
+		<xsd:complexContent>
+			<xsd:extension base="tns:Message">
+				<xsd:sequence>
+					<xsd:element name="Ping" type="tns:Ping"></xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+
+	</xsd:complexType>
+
+	<xsd:complexType name="Reply">
+		<xsd:complexContent>
+			<xsd:extension base="tns:Message">
+				<xsd:sequence>
+					<xsd:element name="Pong" type="tns:Pong"></xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="JoinRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Request">
+					<xsd:sequence>
+							<xsd:element name="Player"
+								type="tns:PlayerDescriptor">
+							</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="JoinReply">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Reply">
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="Player"
+								type="tns:PlayerDescriptor">
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:element name="Error" type="tns:Error"/>
+					</xsd:choice>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="LeaveRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Request">
+					<xsd:sequence>
+						<xsd:element name="Player" type="tns:PlayerDescriptor"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="LeaveReply">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Reply">
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="PlayerID" type="xsd:int"/>
+						</xsd:sequence>
+						<xsd:element name="Error" type="tns:Error"/>
+					</xsd:choice>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="StatusRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Request">
+					<xsd:sequence>
+						<xsd:element name="Player" type="tns:PlayerDescriptor"/>
+						<xsd:element name="Property" type="tns:StatusProperty"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="StatusReply">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="tns:Reply">
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="Property" type="tns:StatusProperty"/>
+						</xsd:sequence>
+						<xsd:element name="Error" type="tns:Error"/>
+					</xsd:choice>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+
+    <xsd:complexType name="Error">
+    	<xsd:sequence>
+    		<xsd:element name="Code" type="xsd:int"/>
+    		<xsd:element name="Description" type="xsd:string"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="PlayerDescriptor">
+    	<xsd:choice>
+    		<xsd:element name="PlayerID"
+    			type="xsd:int">
+    		</xsd:element>
+    		<xsd:element name="PlayerName" type="xsd:normalizedString"></xsd:element>
+    	</xsd:choice>
+    </xsd:complexType>
+    
+    <xsd:complexType name="StatusProperty">
+    	<xsd:simpleContent>
+    		<xsd:extension base="xsd:normalizedString">
+    			<xsd:attribute name="Name" type="xsd:normalizedString"></xsd:attribute>
+    		</xsd:extension>
+    	</xsd:simpleContent>
+    </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BlogSearch" 
+	targetNamespace="http://www.tbs.be/mgf/definitions"
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.tbs.be/mgf/definitions"
+	xmlns:schema="http://www.tbs.be/mgf/schemas">
+	
+<wsdl:types>
+	<xsd:schema 
+		targetNamespace="http://www.tbs.be/mgf/definitions" 
+		xmlns:schema="http://www.tbs.be/mgf/schemas">
+		<xsd:import 
+			namespace="http://www.tbs.be/mgf/schemas" 
+			schemaLocation="http://3bstest.appspot.com/wsdl/mgf.xsd"/>
+	</xsd:schema>
+</wsdl:types>
+
+<wsdl:message name="JoinRequest">
+	<wsdl:part name="JoinRequest" element="schema:JoinRequest"/>
+</wsdl:message>
+
+<wsdl:message name="JoinReply">
+	<wsdl:part name="JoinReply" element="schema:JoinReply"/>
+</wsdl:message>
+
+<wsdl:message name="StatusRequest">
+	<wsdl:part name="StatusRequest" element="schema:StatusRequest"/>
+</wsdl:message>
+
+<wsdl:message name="StatusReply">
+	<wsdl:part name="StatusReply" element="schema:StatusReply"/>
+</wsdl:message>
+
+<wsdl:message name="LeaveRequest">
+	<wsdl:part name="LeaveRequest" element="schema:LeaveRequest"/>
+</wsdl:message>
+
+<wsdl:message name="LeaveReply">
+	<wsdl:part name="LeaveReply" element="schema:LeaveReply"/>
+</wsdl:message>
+
+<wsdl:portType name="GamingService">
+	<wsdl:operation name="JoinOperation">
+		<wsdl:input message="tns:JoinRequest" name="JoinRequest" />
+		<wsdl:output message="tns:JoinReply" name="JoinReply" />
+	</wsdl:operation>
+	<wsdl:operation name="StatusOperation">
+		<wsdl:input message="tns:StatusRequest" name="StatusRequest" />
+		<wsdl:output message="tns:StatusReply" name="StatusReply" />
+	</wsdl:operation>
+	<wsdl:operation name="LeaveOperation">
+		<wsdl:input message="tns:LeaveRequest" name="LeaveRequest" />
+		<wsdl:output message="tns:LeaveReply" name="LeaveReply" />
+	</wsdl:operation>
+</wsdl:portType>
+
+<wsdl:binding name="GamingServiceBinding" type="tns:GamingService">
+	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<wsdl:operation name="JoinOperation">
+		<soap:operation soapAction="http://3bstest.appspot.com/Join"/>
+		<wsdl:input name="JoinRequest">
+			<soap:body use="literal" />
+		</wsdl:input>
+		<wsdl:output name="JoinReply">
+			<soap:body use="literal" />
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="StatusOperation">
+		<soap:operation soapAction="http://3bstest.appspot.com/Status"/>
+		<wsdl:input name="StatusRequest">
+			<soap:body use="literal" />
+		</wsdl:input>
+		<wsdl:output name="StatusReply">
+			<soap:body use="literal" />
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="LeaveOperation">
+		<soap:operation soapAction="http://3bstest.appspot.com/Leave"/>
+		<wsdl:input name="LeaveRequest">
+			<soap:body use="literal" />
+		</wsdl:input>
+		<wsdl:output name="LeaveReply">
+			<soap:body use="literal" />
+		</wsdl:output>
+	</wsdl:operation>
+</wsdl:binding>
+
+<wsdl:service name="GamingService">
+	<wsdl:port binding="tns:GamingServiceBinding" name="GamingServiceBindingPort">
+		<soap:address location="http://3bstest.appspot.com/cloudserve/GamingService.soap"/>
+	</wsdl:port>
+</wsdl:service>
+
+</definitions>

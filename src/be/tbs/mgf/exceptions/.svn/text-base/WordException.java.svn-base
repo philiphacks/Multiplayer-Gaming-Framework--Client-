@@ -1,0 +1,26 @@
+package be.tbs.mgf.exceptions;
+
+public class WordException extends ScrabbleException {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = -8134698590872686552L;
+
+	/**
+	 * Construct a new Word Exception with given message and cause
+	 * @param message - the reason for throwing this error
+	 * @param cause - the cause for this error
+	 */
+	public WordException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	/**
+	 * Construct a new Word Exception with given message
+	 * @param message - the reason for throwing this error
+	 */
+	public WordException(String message) {
+		super(message);
+	}
+}
