@@ -1,0 +1,8 @@
+Multiplayer Gaming Framework: Client
+by Philip De Smedt & Gino Wuytjens
+
+This MGF Client can be used to communicate to an MGF Server (Apache or Google App Engine). 
+
+How it works
+
+Using a set of endpoints, the client is able to send SOAP messages to the server. Typical messages for the framework are join, leave and status. A status reply contains all status updates the server registered since the last status message.
